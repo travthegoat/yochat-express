@@ -1,0 +1,31 @@
+name: CI Pipeline
+
+on:
+  push:
+    pull_requests:
+      branches:
+        - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: |
+          npm install
+
+      - name: Run tests
+        run: |
+          npm test
+
+      - name: Build project
+        run: |
+          docker build -t yochat-backend .
