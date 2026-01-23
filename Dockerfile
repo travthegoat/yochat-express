@@ -11,7 +11,7 @@ RUN npm run build
 
 # Stage 2: Run the application
 FROM node:24-alpine AS runner
-
+ 
 WORKDIR /app
 
 COPY package*.json ./
