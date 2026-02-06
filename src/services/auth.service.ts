@@ -17,13 +17,11 @@ export const createUser = async (userData: { username: string; email: string; pa
 
     const passwordHashed = await bcrypt.hash(password, 10);
 
-    const user: typeof usersTable.$inferInsert = {
+    const [user] = await db.insert(usersTable).values({
         username,
         email,
         password: passwordHashed,
-    }
-
-    await db.insert(usersTable).values(user);
+    }).returning({ id: usersTable.id });
 
     // create profile for user
     const profile: typeof profilesTable.$inferInsert = {
